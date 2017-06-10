@@ -3,9 +3,10 @@
 	# to insert into the admin table
 	class Register {
 
-		private $result;
 
 		public function doesEmailExist($dbconn, $email) {
+
+			$result = false;
 
 			$stmt = $dbconn->prepare("SELECT email FROM admin WHERE email=:em");
 			$stmt->bindParam(':em', $email);
@@ -19,6 +20,7 @@
 			return $result;
 
 		}
+
 
 		public function doAdminRegister($dbconn, $input) {
 
