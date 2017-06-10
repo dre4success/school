@@ -13,6 +13,54 @@
 	# include functions 
 	include 'includes/functions.php';
 
+	# include registerClass
+	include 'includes/registerClass.php';
+
+	$registration = new Register();
+
+	$errors = [];
+
+	if(array_key_exists('register', $_POST)) {
+
+		if(empty($_POST['fname'])) {
+			$errors['fname'] = "Please Enter Your Firstname";
+		}
+
+		if(empty($_POST['lname'])) {
+			$errors['lname'] = "Please Enter Your Lastname";
+		}
+
+		if(empty($_POST['email'])) {
+			$errors['email'] = "Please Enter Your Email";
+		}
+
+		// checking for duplicate email
+		$check = $registration->doesEmailExist($conn, $_POST['email']);
+
+		if($check) {
+			$errors['email'] = "Email already exists";
+		}
+
+		if(empty($_POST['password'])) {
+			$errors['password'] = "Please Enter Your Password";
+		}
+
+		if(empty($_POST['pword'])) {
+			$errors['pword'] = "Please Enter Your Password again";
+
+			if($_POST['pword'] != $_POST['password']) {
+				$errors['pword'] = "Passwords do not match";
+			}
+		}
+
+		if(empty($errors)) {
+
+			
+		}
+
+
+	}
+
 ?>
 
 
@@ -22,6 +70,7 @@
 		<form id="register"  action ="register.php" method ="POST">
 			<div>
 				<label>first name:</label>
+				<?php if(isset($errors['fname'])) { echo '<span class="err">'.$errors['fname'].'</span>'; } ?>
 				<input type="text" name="fname" placeholder="first name">
 			</div>
 			<div>
