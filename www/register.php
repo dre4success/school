@@ -55,7 +55,13 @@
 
 		if(empty($errors)) {
 
+			$clean = array_map('trim', $_POST);
 			
+			$hash = password_hash($clean['password'], PASSWORD_DEFAULT);
+
+			$clean['password'] = $hash;
+
+			$registration->doAdminRegister($conn, $clean);	
 		}
 
 
@@ -70,25 +76,29 @@
 		<form id="register"  action ="register.php" method ="POST">
 			<div>
 				<label>first name:</label>
-				<?php if(isset($errors['fname'])) { echo '<span class="err">'.$errors['fname'].'</span>'; } ?>
+				<?php Utils::ErrorHandler($errors, 'fname'); ?>
 				<input type="text" name="fname" placeholder="first name">
 			</div>
 			<div>
 				<label>last name:</label>	
+				<?php Utils::ErrorHandler($errors, 'lname'); ?>
 				<input type="text" name="lname" placeholder="last name">
 			</div>
 
 			<div>
 				<label>email:</label>
+				<?php Utils::ErrorHandler($errors, 'email'); ?>
 				<input type="text" name="email" placeholder="email">
 			</div>
 			<div>
 				<label>password:</label>
+				<?php Utils::ErrorHandler($errors, 'password'); ?>
 				<input type="password" name="password" placeholder="password">
 			</div>
  
 			<div>
 				<label>confirm password:</label>	
+				<?php Utils::ErrorHandler($errors, 'pword'); ?>
 				<input type="password" name="pword" placeholder="password">
 			</div>
 
