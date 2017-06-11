@@ -1,6 +1,6 @@
 <section class="foot">
 		<div>
-			<p>&copy; <?php echo date('y'); ?>;
+			<p>&copy; <?php echo date('Y'); ?>;
 		</div>
 	</section>
 </body>
