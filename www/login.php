@@ -12,6 +12,11 @@
 	# include functions 
 	include 'includes/functions.php';
 
+	# include clas Login
+	include 'includes/classLogin.php';
+
+	$login = new Login();
+
 	$errors = [];
 
 	if(array_key_exists('login', $_POST)) {
@@ -25,7 +30,13 @@
 		}
 
 		if(empty($errors)) {
-			$clean = array_map('trim', $_POST)
+			$clean = array_map('trim', $_POST);
+
+			$check = $login->doLogin($conn, $clean);
+
+			$_SESSION['id'] = $check['admin_id'];
+			
+			header("Location:home.php");
 		}
 	}
 ?>
